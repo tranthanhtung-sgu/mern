@@ -1,0 +1,46 @@
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "username":"jim",
+    "password":"jim"
+}
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "username":"jim",
+    "password":"jim"
+}
+###
+POST http://localhost:5000/api/posts/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGNlY2M3YmE1ZjYyYTJkYmU1MjhmMzIiLCJpYXQiOjE2MjQxNjU2OTl9.HrOdQ7ZzKUpC93YouNxweJc_YVTJlYSProsh7D-I1_Y
+
+{
+    "title":"Second asdad",
+    "description":"bla bla bla",
+    "url":"vuejs.com",
+    "status":"LEARNING"
+}
+###
+
+GET http://localhost:5000/api/posts/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGNlY2M3YmE1ZjYyYTJkYmU1MjhmMzIiLCJpYXQiOjE2MjQxNjU2OTl9.HrOdQ7ZzKUpC93YouNxweJc_YVTJlYSProsh7D-I1_Y
+###
+PUT http://localhost:5000/api/posts/60cecd4ea5f62a2dbe528f3c
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGNlY2M3YmE1ZjYyYTJkYmU1MjhmMzIiLCJpYXQiOjE2MjQxNjU2OTl9.HrOdQ7ZzKUpC93YouNxweJc_YVTJlYSProsh7D-I1_Y
+
+{
+    "title":"Second asdad updated",
+    "description":"updated",
+    "url":"updated.com",
+    "status":"TO LEARN"
+}
+
+###
+
+DELETE  http://localhost:5000/api/posts/60ced372cabf843017a7f0cf
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGNlY2M3YmE1ZjYyYTJkYmU1MjhmMzIiLCJpYXQiOjE2MjQxNjU2OTl9.HrOdQ7ZzKUpC93YouNxweJc_YVTJlYSProsh7D-I1_Y
