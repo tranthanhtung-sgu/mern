@@ -6,7 +6,7 @@ const verifyToken=require("../middleware/auth")
 //GET
 router.get('/',verifyToken,async(req,res)=>{
     try{
-        const posts=await Post.find({user:req.userId}).populate("user",['username'])
+        const posts=await Post.find({user:req.userId}).populate("user",['username'])//populate đính kèm thêm username của bảng User
         res.json({success:true,posts})
     }catch(error){
         console.log(error);

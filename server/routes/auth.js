@@ -53,7 +53,7 @@ router.post('/login',async (req,res)=>{
         const accessToken=jwt.sign({userId:user._id},process.env.ACCESS_TOKEN_SECRET)
         res.json({success:true,message:"login success",accessToken})
     }catch(error){
-        console.log(error)
+        console.log(error,"loi cmnr")
     }
 })
 module.exports=router;
