@@ -56,4 +56,13 @@ router.post('/login',async (req,res)=>{
         console.log(error,"loi cmnr")
     }
 })
+
+router.get('/',async (req,res)=>{
+    try{
+        const users = await User.find();
+        res.json({success :true,message :"lay du lieu thanh cong",users})
+    }catch(error){
+        console.log(error.message)
+    }
+})
 module.exports=router;

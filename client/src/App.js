@@ -1,24 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
-
-function App() {
+import SignIn from './components/SignIn'
+import SignOut from './components/SignOut'
+import Dashboard from './components/dasboard/Dashboard'
+import UpdateItem from '../src/components/dasboard/UpdateItem'
+import { BrowserRouter } from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+const App = () => {
+  let history=useHistory()
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter >
+      <Router history={history}>
+        <Switch>
+          <Route path="/admin" render={() => {
+            return localStorage.getItem("accessToken") == 'true' ? <Dashboard /> : <Redirect to="/login" />
+          }}>
+          </Route>
+          <Route path="/register">
+            <SignOut></SignOut>
+          </Route>
+          <Route path="/login">
+            <SignIn></SignIn>
+          </Route>
+
+
+        </Switch>
+
+      </Router>
+    </BrowserRouter>
   );
 }
 

@@ -4,6 +4,7 @@ const mongoose=require("mongoose");
 const authRouter=require('./routes/auth')
 const postRouter=require('./routes/post')
 const productRouter=require('./routes/product')
+const cors = require('cors')
 const connectDB = async ()=>{
     try{
         await mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@mern-learnit.cjwrv.mongodb.net/mern-learnit?retryWrites=true&w=majority`,{
@@ -18,12 +19,19 @@ const connectDB = async ()=>{
         process.exit(1);
     }
 }
+
+
+
 connectDB();
 const app=express();
 // app.get("/",(req,res)=>res.send("hello world"));
+
 app.use(express.json())// để đọc được dữ liệu trong body
+app.use(cors())
 app.use("/api/auth",authRouter)
 app.use("/api/posts",postRouter)
 app.use("/api/products",productRouter)
+
+
 const PORT=5000;
 app.listen(PORT,()=>console.log(`server run on port ${PORT}`))
