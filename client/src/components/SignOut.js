@@ -13,7 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios'
-import {useHistory} from 'react-router-dom'
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -55,16 +54,15 @@ export default function SignOut(props) {
     const [phone, setPhone] = useState('')
 
     //history
-    let history=useHistory()
     //Submit
     const handleSubmit=(event)=>{
          event.preventDefault();
-        if(password==rePassword){
+        if(password===rePassword){
         axios.post('http://localhost:5000/api/auth/register/',{username,password,phone})
         .then(function (res) {
           // handle success
           console.log(res);
-          if(res.data.message=true)
+          if(res.data.message===true)
           {
               alert("login success");
               localStorage.setItem("accessToken",true);

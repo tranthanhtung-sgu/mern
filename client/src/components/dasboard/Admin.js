@@ -1,34 +1,17 @@
 import React, { useState, useEffect } from 'react';
-
 import MyCard from './MyCard'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-
-import Typography from '@material-ui/core/Typography';
-
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-
 import axios from 'axios'
 import { url } from './Const'
 import { useHistory } from 'react-router-dom'
 //LisstBox
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+
 
 const drawerWidth = 240;
 
@@ -111,36 +94,64 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Admin() {
+export default function Admin(props) {
     const classes = useStyles();
 
 
 
 
+    const [brand, setBrand] = React.useState();
 
     //Products
     const [brands, setBrands] = useState([])
-
+    localStorage.setItem("chooseBrand", '1')
     const [products, setProducts] = useState([])
+    //
+    const [count, setCount] = useState(0)
+    
+    
     // GET ALL PRODUCT
     useEffect(() => {
-        axios.get(`${url}/products`).then((res) => {
-            setProducts(res.data.products);
-        }).catch((err) => {
-            console.log(err, "loi cmnr")
-        })
-        axios.get(`${url}/brands`).then((res) => {
-            setBrands(res.data.brands);
-            console.log(res.data.brands)
-        }).catch((err) => {
-            console.log(err, "loi cmnr")
-        })
-        
-    },[])
 
-    const handleClick = (e) => {
-        console.log(e)
-    }
+        if (localStorage.getItem("chooseBrand")=== '1') {
+            axios.get(`${url}/products`).then((res) => {
+                setProducts(res.data.products);
+                setCount(products.count);
+                console.log(res.data.products);
+          
+            }).catch((err) => {
+                console.log(err, "loi cmnr")
+            })
+            axios.get(`${url}/brands`).then((res) => {
+                setBrands(res.data.brands);
+                console.log(res.data.brands,"sdfhs")
+            }).catch((err) => {
+                console.log(err, "loi cmnr")
+            })
+            props.updateCount(count)
+            
+        } else {
+            axios.get(`${url}/products`).then((res) => {
+                if (brand === "Iphone") {
+                    setProducts(res.data.products.filter((product) => product.name.includes("Iphone")));
+                }
+                else if (brand === "Huawei")
+                    setProducts(res.data.products.filter((product) => product.name.includes("Huawei")));
+                else if (brand === "Samsung")
+                    setProducts(res.data.products.filter((product) => product.name.includes("Samsung")));
+                else if (brand === "Oppo")
+                    setProducts(res.data.products.filter((product) => product.name.includes("Oppo")));
+                else setProducts(res.data.products);
+            }).catch((err) => {
+                console.log(err, "loi cmnr")
+            })
+        }
+        return () => {
+            localStorage.setItem("chooseBrand", '2');
+        }
+    }, [brand, products])
+
+    
     //history
     let history = useHistory()
 
@@ -150,43 +161,17 @@ export default function Admin() {
         setProducts(newList);
         console.log("update o dasboear")
     }
-    const reUpdate = () => {
-        axios.get(`${url}/products`).then((res) => {
-            setProducts(res.data.products);
-        }).catch((err) => {
-            console.log(err, "loi cmnr")
-        })
-    }
 
     const addItem = () => {
         history.push('/add')
     }
 
-    const fixBrands = [
-        {
-          value: 'iphone',
-          label: 'Iphone',
-        },
-        {
-          value: 'samsung',
-          label: 'Samsung',
-        },
-        {
-          value: 'huawei',
-          label: 'Huawei',
-        },
-        {
-          value: 'oppo',
-          label: 'Oppo',
-        },
-      ];
-      
-
-    const [brand, setBrand] = React.useState('EUR');
 
     const handleChange = (event) => {
-      setBrand(event.target.value);
+        setBrand(event.target.value);
+        console.log(event.target.value, 'Click in ListDrop');
     };
+   
     return (
 
         <Container maxWidth="lg" className={classes.container}>
@@ -195,7 +180,6 @@ export default function Admin() {
                 id="standard-select-currency"
                 select
                 label="Select"
-                value={brand}
                 onChange={handleChange}
                 helperText="Please select your brand"
                 fullWidth
@@ -205,6 +189,10 @@ export default function Admin() {
                         {brand.description}
                     </MenuItem>
                 ))}
+                <MenuItem key="" defaultValue="">
+                   All
+                </MenuItem>
+                
             </TextField>
 
             <Button
@@ -212,7 +200,7 @@ export default function Admin() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                color=""
+                color="inherit"
                 className={classes.submit}
             >
                 <h2>Add Item</h2>
@@ -221,8 +209,8 @@ export default function Admin() {
                 {products.map((product) => {
                     const { _id, name, screen, cpu, ram, rom, img } = product;
                     return (
-                        <Grid item xs={3}>
-                            <Paper className={classes.paper} onClick={handleClick}>
+                        <Grid item xs={3} key={product._id}>
+                            <Paper className={classes.paper} >
                                 <MyCard updateProduct={updateProduct} id={_id} name={name} screen={screen} cpu={cpu} ram={ram} rom={rom} img={img}></MyCard>
                             </Paper>
                         </Grid>

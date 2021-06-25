@@ -67,7 +67,7 @@ Content-Type: application/json
 DELETE  http://localhost:5000/api/products/60d20600968e6a34ce589dd6
 Content-Type: application/json
 ###
-GET  http://localhost:5000/api/products/60d5288bf36c77052ef4f921
+GET  http://localhost:5000/api/products/
 Content-Type: application/json
 
 ###
@@ -103,5 +103,5 @@ Content-Type: application/json
 GET http://localhost:5000/api/brands/
 Content-Type: application/json
 ###
-DELETE http://localhost:5000/api/brands/60d47f515b78513adbce44e8
+DELETE http://localhost:5000/api/brands/60d52857f36c77052ef4f91f
 Content-Type: application/json

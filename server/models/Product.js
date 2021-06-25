@@ -29,7 +29,8 @@ const productSchema=new Schema({
     brand:{
         type:mongoose.Types.ObjectId,
         ref:"brands"
-    }
+    },
+    
     
 
 })

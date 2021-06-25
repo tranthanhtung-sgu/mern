@@ -12,7 +12,7 @@ router.post('/',async (req,res)=>{
         await newProduct.save();
         res.json({success:true,message:"them thanh cong",newProduct})
     }catch(error){
-        console.log(error.messagem,"loi cmnr");
+        console.log(error.message,"loi cmnr");
     }
 })
 
@@ -41,10 +41,10 @@ router.put('/:id',async (req,res)=>{
 //GET ALL
 router.get('/',async (req,res)=>{
     try{
-        const products=await Product.find();
+        const products=await Product.find().populate("brand",["name"]);
         res.json({success:true,message:"tim thay thanh cong",products})
     }catch(error){
-        console.log(error.messagem,"loi khogn tim duoc");
+        console.log(error.message,"loi khogn tim duoc");
     }
 })
 //GET ONE

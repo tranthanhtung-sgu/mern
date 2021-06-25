@@ -1,13 +1,11 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
+import MenuItem from '@material-ui/core/MenuItem';
 import UpdateIcon from '@material-ui/icons/Update';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -50,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignOut(props) {
+    const [brands, setBrands] = useState([])
     const classes = useStyles();
     const [Name, setName] = useState('')
     const [Screen, setScreen] = useState('')
@@ -57,39 +56,45 @@ export default function SignOut(props) {
     const [RAM, setRAM] = useState('')
     const [ROM, setROM] = useState('')
     const [Image, setImage] = useState('')
-    const [product, setProduct] = useState({})
+    const [brand, setBrand] = useState('')
+
     //history
     let history = useHistory()
     //Submit
     const handleSubmit = (event) => {
         axios.post(`${url}/products`,
-        {
-            name:Name,
-            screen:Screen,
-            cpu:CPU,
-            ram:RAM,
-            rom:ROM,
-            img:Image
-        }).then(res=>console.log(res,"success")
-        );
-        localStorage.setItem("updateProducts",localStorage.getItem("updateProducts")+1)
+            {
+                name: Name,
+                screen: Screen,
+                cpu: CPU,
+                ram: RAM,
+                rom: ROM,
+                img: Image,
+                brand:brands.find(item=>item.description===brand)._id
+            }).then(res => console.log(res, "success")
+            );
+        localStorage.setItem("updateProducts", localStorage.getItem("updateProducts") + 1)
         history.push('/admin')
 
         console.log(event);
+       
 
     }
     useEffect(() => {
-        const product = axios(`${url}/products/${localStorage.getItem("idUpdate")}`)
-        .then(res => {
-            console.log(res.data.product.name, "success")
-            setProduct(res.data.product);
-           
-        }
-        ).catch(err => console.log(err.message, "loi"))
-        console.log(product);
-        
-    },[])
-   
+        //GET BRANDS
+        axios.get(`${url}/brands`).then((res) => {
+            setBrands(res.data.brands);
+            console.log(res.data.brands)
+        }).catch((err) => {
+            console.log(err, "loi cmnr")
+        })
+
+    }, [])
+
+    //LOG TRY
+  
+
+
     const handleChangeName = (event) => {
         setName(event.target.value)
     }
@@ -110,22 +115,19 @@ export default function SignOut(props) {
     const handleChangeImage = (event) => {
         setImage(event.target.value)
     }
-
-    const click= ()=>{
-        const { _id, name, screen, cpu, ram, rom, img } = product;
-        setName(name)
-        setScreen(screen)
-        setCPU(cpu)
-        setRAM(ram)
-        setROM(rom)
-        setImage(img)
-         
+    const handleChangeBrand = (event) => {
+        setBrand(event.target.value)
+        console.log(brand);
     }
-    const backAdmin=()=>{
+
+
+
+
+    const backAdmin = () => {
         history.push("/admin")
-      }
-      
-    
+    }
+
+
     //FORM
     return (
         <Container component="main" maxWidth="xl">
@@ -138,8 +140,9 @@ export default function SignOut(props) {
                     Update Product
                 </Typography>
                 <form onSubmit={handleSubmit} className={classes.form} Validate>
-                <Button
-                       onClick={backAdmin}
+                    {/* BUTTON BACK */}
+                    <Button
+                        onClick={backAdmin}
                         fullWidth
                         variant="contained"
                         color="success"
@@ -147,6 +150,22 @@ export default function SignOut(props) {
                     >
                         Back
                     </Button>
+                    {/* DROP LIST CHOOSE BRAND */}
+                    <TextField
+                        id="standard-select-currency"
+                        select
+                        required
+                        label="Select"
+                        onChange={handleChangeBrand}
+                        helperText="Please select your brand"
+                        fullWidth
+                    >
+                        {brands.map((brand) => (
+                            <MenuItem key={brand.name} value={brand.description}>
+                                {brand.description}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -231,7 +250,7 @@ export default function SignOut(props) {
             <Box mt={8}>
                 <Copyright />
             </Box>
-           
+
         </Container>
     );
 }

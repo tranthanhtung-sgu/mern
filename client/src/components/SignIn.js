@@ -12,8 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import axios from 'axios'
 import {useHistory} from 'react-router-dom'
+import {postUser} from "./api/user"
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -57,11 +57,11 @@ export default function SignIn(props) {
     const handleSubmit=(event)=>{
          event.preventDefault();
          
-        axios.post('http://localhost:5000/api/auth/login/',{username,password})
+       postUser({username,password})
         .then(function (res) {
           // handle success
           console.log(res);
-          if(res.data.message=true)
+          if(res.data.message===true)
           {
               alert("login success");
               localStorage.setItem("accessToken",true);
@@ -76,7 +76,6 @@ export default function SignIn(props) {
         })
         
     }
-    
 
     const handleChangeUsername=(event)=>{
         setUsername(event.target.value)

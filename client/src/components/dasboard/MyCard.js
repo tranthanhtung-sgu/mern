@@ -59,7 +59,7 @@ export default function MyCard(props) {
           <Typography gutterBottom variant="h5" component="h2">
             {props.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" color="textSecondary" component="span">
             <p>{props.screen}</p>
             <p>{props.cpu}</p>
             <p>{props.ram}</p>

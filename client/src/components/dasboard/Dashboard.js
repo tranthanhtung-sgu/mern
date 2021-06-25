@@ -10,12 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import LinkMate from '@material-ui/core/Link';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems } from './listItems';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -25,26 +23,12 @@ import UpdateItem from './UpdateItem'
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import axios from 'axios'
-import { url } from './Const'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
 import Admin from './Admin'
 import AddItem from './AddItem'
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <LinkMate color="inherit" href="https://material-ui.com/">
-        Your Website
-      </LinkMate>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Manage from './Manage'
+
 
 const drawerWidth = 240;
 
@@ -129,8 +113,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = () => {
+  const [count,setCount]=useState(0);
   let history = useHistory()
-  const [admin, setAdmin] = useState(true);
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -139,17 +123,16 @@ const Dashboard = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
+//update Count
+  const updateCount=(number)=>{
+    setCount(number);
+  }
 
 
   //Products
 
-  const [products, setProducts] = useState([])
+ 
 
-  const handleClick = (e) => {
-    console.log(e)
-  }
   //history
 
 
@@ -157,15 +140,8 @@ const Dashboard = () => {
     history.push("/login")
     localStorage.setItem("accessToken", false);
   }
-  //updateProduct
-  const updateProduct = (newList) => {
-    setProducts(newList);
-    console.log("update o dasboear")
-  }
-  //backAdmin
-  const backAdmin = () => {
-    history.push("/admin")
-  }
+ 
+  
 
   return (
     <div className={classes.root}>
@@ -187,7 +163,7 @@ const Dashboard = () => {
               Dashboard
             </Typography>
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={count} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -218,12 +194,12 @@ const Dashboard = () => {
                   <ListItemText primary="Home" />
                 </ListItem>
               </Link>
-              <Link to='/admin'>
+              <Link to='/manage'>
                 <ListItem button>
                   <ListItemIcon>
                     <ShoppingCartIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Home  Link" />
+                  <ListItemText primary="Manage" />
                 </ListItem>
               </Link>
               <ListItem button>
@@ -253,9 +229,10 @@ const Dashboard = () => {
           <div className={classes.appBarSpacer} />
 
           <Switch>
+            <Route path="/manage" exact><Manage/></Route>
             <Route path="/add" exact><AddItem /></Route>
             <Route path="/update" exact><UpdateItem /></Route>
-            <Route path="/admin" exact> <Admin /> </Route>
+            <Route path="/admin" exact> <Admin updateCount={updateCount} /> </Route>
           </Switch>
 
         </main>
