@@ -5,7 +5,7 @@ const argon2=require("argon2")
 const jwt=require("jsonwebtoken")
 router.post('/register',async (req,res)=>{
     
-    const {username,password}=req.body
+    const {username,password,phone}=req.body
     if(!username||!password){
         return res.status(400).json({success:false,message:"miss username or password"})
     }
@@ -17,7 +17,8 @@ router.post('/register',async (req,res)=>{
         hashedPassword=await argon2.hash(password);
         const newUser=new User({
             username,
-            password:hashedPassword
+            password:hashedPassword,
+            phone
         });
        await newUser.save();
 

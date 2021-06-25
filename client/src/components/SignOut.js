@@ -52,13 +52,15 @@ export default function SignOut(props) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [rePassword, setRePassword] = useState('')
+    const [phone, setPhone] = useState('')
+
     //history
     let history=useHistory()
     //Submit
     const handleSubmit=(event)=>{
          event.preventDefault();
         if(password==rePassword){
-        axios.post('http://localhost:5000/api/auth/register/',{username,password})
+        axios.post('http://localhost:5000/api/auth/register/',{username,password,phone})
         .then(function (res) {
           // handle success
           console.log(res);
@@ -94,6 +96,10 @@ export default function SignOut(props) {
       setRePassword(event.target.value)
    
   }
+  const handleChangePhone=(event)=>{
+    setPhone(event.target.value)
+ 
+}
 
 
 //FORM
@@ -107,7 +113,7 @@ export default function SignOut(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form  onSubmit={handleSubmit} className={classes.form} noValidate>
+        <form  onSubmit={handleSubmit} className={classes.form} Validate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -146,6 +152,18 @@ export default function SignOut(props) {
             autoComplete="current-password"
             value={rePassword}
             onChange={handleChangeRePassword}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="phone"
+            label="Number phone"
+            id="number"
+            autoComplete="current-password"
+            value={phone}
+            onChange={handleChangePhone}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

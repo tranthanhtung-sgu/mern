@@ -3,10 +3,10 @@ const router =express.Router();
 const Product= require('../models/Product');
 //POST
 router.post('/',async (req,res)=>{
-    const {name,screen,cpu,ram,rom,img}=req.body;
+    const {name,screen,cpu,ram,rom,img,brand}=req.body;
     try{
         const newProduct=new Product({
-            name,screen,cpu,ram,rom,img
+            name,screen,cpu,ram,rom,img,brand
         }
         );
         await newProduct.save();
@@ -16,7 +16,7 @@ router.post('/',async (req,res)=>{
     }
 })
 
-//GET
+//delete
 router.delete('/:id',async (req,res)=>{
     try{
         const deletedProduct=await Product.findOneAndDelete({_id:req.params.id})
@@ -50,7 +50,7 @@ router.get('/',async (req,res)=>{
 //GET ONE
 router.get('/:id',async (req,res)=>{
     try{
-        const product=await Product.findOne({_id:req.params.id});
+        const product=await Product.findOne({_id:req.params.id}).populate("brand",["description"]);
         res.json({success:true,message:"tim thay thanh cong",product})
     }catch(error){
         console.log(error.messagem,"loi khogn tim duoc");

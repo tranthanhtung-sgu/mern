@@ -4,6 +4,7 @@ const mongoose=require("mongoose");
 const authRouter=require('./routes/auth')
 const postRouter=require('./routes/post')
 const productRouter=require('./routes/product')
+const brandRouter =require('./routes/brand')
 const cors = require('cors')
 const connectDB = async ()=>{
     try{
@@ -31,7 +32,7 @@ app.use(cors())
 app.use("/api/auth",authRouter)
 app.use("/api/posts",postRouter)
 app.use("/api/products",productRouter)
-
+app.use("/api/brands",brandRouter)
 
 const PORT=5000;
 app.listen(PORT,()=>console.log(`server run on port ${PORT}`))

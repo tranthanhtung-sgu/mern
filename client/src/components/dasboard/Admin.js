@@ -119,6 +119,7 @@ export default function Admin() {
 
 
     //Products
+    const [brands, setBrands] = useState([])
 
     const [products, setProducts] = useState([])
     // GET ALL PRODUCT
@@ -128,7 +129,14 @@ export default function Admin() {
         }).catch((err) => {
             console.log(err, "loi cmnr")
         })
-    })
+        axios.get(`${url}/brands`).then((res) => {
+            setBrands(res.data.brands);
+            console.log(res.data.brands)
+        }).catch((err) => {
+            console.log(err, "loi cmnr")
+        })
+        
+    },[])
 
     const handleClick = (e) => {
         console.log(e)
@@ -154,7 +162,7 @@ export default function Admin() {
         history.push('/add')
     }
 
-    const brands = [
+    const fixBrands = [
         {
           value: 'iphone',
           label: 'Iphone',
@@ -192,9 +200,9 @@ export default function Admin() {
                 helperText="Please select your brand"
                 fullWidth
             >
-                {brands.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                {brands.map((brand) => (
+                    <MenuItem key={brand.name} value={brand.description}>
+                        {brand.description}
                     </MenuItem>
                 ))}
             </TextField>

@@ -3,7 +3,8 @@ Content-Type: application/json
 
 {
     "username":"quynh",
-    "password":"quynh"
+    "password":"quynh",
+    
 }
 ###
 GET  http://localhost:5000/api/auth/
@@ -54,18 +55,19 @@ POST http://localhost:5000/api/products/
 Content-Type: application/json
 
 {
-    "name":"Iphone 12",
+    "name":"Iphone 12-",
     "screen":"AMOLED",
     "cpu":"A14 BIONIC",
     "ram":"6G",
     "rom":"64G",
-    "img":"https://cdn.tgdd.vn/Products/Images/42/213031/iphone-12-violet-1-600x600.jpg"
+    "img":"https://cdn.tgdd.vn/Products/Images/42/213031/iphone-12-violet-1-600x600.jpg",
+    "brand":"60d45b07df04e02b981fbb17"
 }
 ###
 DELETE  http://localhost:5000/api/products/60d20600968e6a34ce589dd6
 Content-Type: application/json
 ###
-GET  http://localhost:5000/api/products/
+GET  http://localhost:5000/api/products/60d5288bf36c77052ef4f921
 Content-Type: application/json
 
 ###
@@ -80,3 +82,26 @@ Content-Type: application/json
     "rom":"64G",
     "img":"https://hoanghamobile.com/i/preview/Uploads/2020/11/06/iphone-12-pro-max-2.png"
 }
+
+###
+POST http://localhost:5000/api/brands/
+Content-Type: application/json
+
+{
+    "name":"huawei",
+    "description":"Huawei"
+}
+###
+POST http://localhost:5000/api/brands/
+Content-Type: application/json
+
+{
+    "name":"huawei",
+    "description":"Huawei"
+}
+###
+GET http://localhost:5000/api/brands/
+Content-Type: application/json
+###
+DELETE http://localhost:5000/api/brands/60d47f515b78513adbce44e8
+Content-Type: application/json

@@ -137,7 +137,7 @@ export default function SignOut(props) {
                 <Typography component="h1" variant="h5">
                     Update Product
                 </Typography>
-                <form onSubmit={handleSubmit} className={classes.form} noValidate>
+                <form onSubmit={handleSubmit} className={classes.form} Validate>
                 <Button
                        onClick={backAdmin}
                         fullWidth

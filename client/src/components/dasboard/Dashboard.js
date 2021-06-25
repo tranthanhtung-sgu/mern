@@ -51,7 +51,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    
+
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -169,95 +169,96 @@ const Dashboard = () => {
 
   return (
     <div className={classes.root}>
-         <Router>
+      <Router>
 
-      <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
+        <CssBaseline />
+        <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+          <Toolbar className={classes.toolbar}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+              Dashboard
+            </Typography>
+            <IconButton color="inherit">
+              <Badge badgeContent={4} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          }}
+          open={open}
+        >
+          <div className={classes.toolbarIcon}>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
 
-          <div>
+            <div>
 
-
-            <ListItem button onClick={backAdmin}>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItem>
-            <Link to='/admin'>
+              <Link to='/admin'>
+                <ListItem button>
+                  <ListItemIcon>
+                    <DashboardIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Home" />
+                </ListItem>
+              </Link>
+              <Link to='/admin'>
+                <ListItem button>
+                  <ListItemIcon>
+                    <ShoppingCartIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Home  Link" />
+                </ListItem>
+              </Link>
               <ListItem button>
                 <ListItemIcon>
-                  <ShoppingCartIcon />
+                  <PeopleIcon />
                 </ListItemIcon>
-                <ListItemText primary="Home  Link" />
+                <ListItemText primary="classify" />
               </ListItem>
-            </Link>
-            <ListItem button>
-              <ListItemIcon>
-                <PeopleIcon />
-              </ListItemIcon>
-              <ListItemText primary="classify" />
-            </ListItem>
 
+            </div>
+
+          </List>
+          <Divider />
+
+          <div>
+            <ListSubheader inset></ListSubheader>
+            <ListItem button onClick={logOut}>
+              <ListItemIcon>
+                <AssignmentIcon />
+              </ListItemIcon>
+              <ListItemText primary="Log out" />
+            </ListItem>
           </div>
 
-        </List>
-        <Divider />
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
 
-        <div>
-          <ListSubheader inset></ListSubheader>
-          <ListItem button onClick={logOut}>
-            <ListItemIcon>
-              <AssignmentIcon />
-            </ListItemIcon>
-            <ListItemText primary="Log out" />
-          </ListItem>
-        </div>
-
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-     
           <Switch>
-          <Route path="/add" exact><AddItem /></Route>
+            <Route path="/add" exact><AddItem /></Route>
             <Route path="/update" exact><UpdateItem /></Route>
             <Route path="/admin" exact> <Admin /> </Route>
           </Switch>
-        
-      </main>
+
+        </main>
       </Router>
     </div>
   );
