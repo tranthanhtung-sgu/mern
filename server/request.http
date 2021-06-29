@@ -55,13 +55,14 @@ POST http://localhost:5000/api/products/
 Content-Type: application/json
 
 {
-    "name":"Iphone 12-",
-    "screen":"AMOLED",
-    "cpu":"A14 BIONIC",
-    "ram":"6G",
-    "rom":"64G",
-    "img":"https://cdn.tgdd.vn/Products/Images/42/213031/iphone-12-violet-1-600x600.jpg",
-    "brand":"60d45b07df04e02b981fbb17"
+      "name": "Huawei nova 3i",
+      "screen": "AMOLED",
+      "cpu": "Exynos 2100",
+      "ram": "8 GB",
+      "rom": "128 GB",
+      "img": "https://cdn.tgdd.vn/Products/Images/42/179673/huawei-nova-3i-600-600-600x600.jpg",
+      "quantity": 4,
+      "brand": "60d45b33df04e02b981fbb1d"
 }
 ###
 DELETE  http://localhost:5000/api/products/60d20600968e6a34ce589dd6
@@ -75,12 +76,14 @@ PUT  http://localhost:5000/api/products/60d208109e2aeb36e0b71015
 Content-Type: application/json
 
 {
-    "name":"Iphone 11",
-    "screen":"AMOLED",
-    "cpu":"A14 BIONIC",
-    "ram":"6G",
-    "rom":"64G",
-    "img":"https://hoanghamobile.com/i/preview/Uploads/2020/11/06/iphone-12-pro-max-2.png"
+      "name": "Iphone 12",
+      "screen": "AMOLED",
+      "cpu": "A14 BIONIC",
+      "ram": "6G",
+      "rom": "64G",
+      "img": "https://cdn.tgdd.vn/Products/Images/42/213031/iphone-12-violet-1-600x600.jpg",
+      "quantity":10,
+        "brand":"60d45b07df04e02b981fbb17"
 }
 
 ###

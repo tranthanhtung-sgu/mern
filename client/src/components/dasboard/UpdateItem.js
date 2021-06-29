@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -57,22 +57,25 @@ export default function SignOut(props) {
     const [RAM, setRAM] = useState('')
     const [ROM, setROM] = useState('')
     const [Image, setImage] = useState('')
+    const [Quantity, setQuantity] = useState('')
+
     const [product, setProduct] = useState({})
     //history
     let history = useHistory()
     //Submit
     const handleSubmit = (event) => {
         axios.put(`${url}/products/${localStorage.getItem("idUpdate")}`,
-        {
-            name:Name,
-            screen:Screen,
-            cpu:CPU,
-            ram:RAM,
-            rom:ROM,
-            img:Image
-        }).then(res=>console.log(res,"success")
-        );
-        localStorage.setItem("updateProducts",localStorage.getItem("updateProducts")+1)
+            {
+                name: Name,
+                screen: Screen,
+                cpu: CPU,
+                ram: RAM,
+                rom: ROM,
+                img: Image,
+                quantity: Quantity
+            }).then(res => console.log(res, "success")
+            );
+        localStorage.setItem("updateProducts", localStorage.getItem("updateProducts") + 1)
         history.push('/admin')
 
         console.log(event);
@@ -80,16 +83,16 @@ export default function SignOut(props) {
     }
     useEffect(() => {
         const product = axios(`${url}/products/${localStorage.getItem("idUpdate")}`)
-        .then(res => {
-            console.log(res.data.product.name, "success")
-            setProduct(res.data.product);
-           
-        }
-        ).catch(err => console.log(err.message, "loi"))
+            .then(res => {
+                console.log(res.data.product.name, "success")
+                setProduct(res.data.product);
+
+            }
+            ).catch(err => console.log(err.message, "loi"))
         console.log(product);
-        
-    },[])
-   
+
+    }, [])
+
     const handleChangeName = (event) => {
         setName(event.target.value)
     }
@@ -110,22 +113,25 @@ export default function SignOut(props) {
     const handleChangeImage = (event) => {
         setImage(event.target.value)
     }
+    const handleChangeQuantity = (event) => {
+        setQuantity(event.target.value)
+    }
 
-    const click= ()=>{
-        const { _id, name, screen, cpu, ram, rom, img } = product;
+    const click = () => {
+        const { _id, name, screen, cpu, ram, rom, img,quantity } = product;
         setName(name)
         setScreen(screen)
-        setCPU(cpu)
+        setCPU(cpu) 
         setRAM(ram)
         setROM(rom)
         setImage(img)
-         
+        setQuantity(quantity)
     }
-    const backAdmin=()=>{
+    const backAdmin = () => {
         history.push("/admin")
-      }
-      
-    
+    }
+
+
     //FORM
     return (
         <Container component="main" maxWidth="xl">
@@ -138,8 +144,8 @@ export default function SignOut(props) {
                     Update Product
                 </Typography>
                 <form onSubmit={handleSubmit} className={classes.form} Validate>
-                <Button
-                       onClick={backAdmin}
+                    <Button
+                        onClick={backAdmin}
                         fullWidth
                         variant="contained"
                         color="success"
@@ -147,8 +153,8 @@ export default function SignOut(props) {
                     >
                         Back
                     </Button>
-                <Button
-                       onClick={click}
+                    <Button
+                        onClick={click}
                         fullWidth
                         variant="contained"
                         color="success"
@@ -225,6 +231,18 @@ export default function SignOut(props) {
                         onChange={handleChangeImage}
                     />
 
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="quantity"
+                        label="Quanity"
+                        id="quantity"
+                        value={Quantity}
+                        onChange={handleChangeQuantity}
+                    />
+
 
                     <Button
                         type="submit"
@@ -240,7 +258,7 @@ export default function SignOut(props) {
             <Box mt={8}>
                 <Copyright />
             </Box>
-           
+
         </Container>
     );
 }

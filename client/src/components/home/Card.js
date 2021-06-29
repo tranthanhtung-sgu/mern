@@ -7,7 +7,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
@@ -21,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 345,
   },
   media: {
-    height: "150px",
+    height: "160px",
     paddingTop: '56.25%', // 16:9
   },
   expand: {
@@ -48,6 +47,21 @@ export default function RecipeReviewCard(props) {
     setExpanded(!expanded);
   };
 
+
+  const addItemCart = (product) => {
+    if (!sessionStorage.getItem("cart")) {
+      sessionStorage.setItem("cart", product._id)
+    }
+    else{
+      let arr=sessionStorage.getItem("cart").split(",");
+      arr.push(product._id);
+      sessionStorage.setItem("cart", arr)
+  }
+
+   
+
+
+  }
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -64,10 +78,7 @@ export default function RecipeReviewCard(props) {
         image={props.product.img}
         title="Paella dish"
       />
-      <CardContent>
-
-      </CardContent>
-      <CardActions disableSpacing>
+      <CardActions onClick={() => addItemCart(props.product)} disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />Add
         </IconButton>
@@ -88,18 +99,12 @@ export default function RecipeReviewCard(props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="span">
-            Screen:{props.product.screen}
+            <p>Screen:{props.product.screen}</p>
+            <p>CPU:{props.product.cpu}</p>
+            <p>RAM:{props.product.ram}</p>
+            <p>ROM:{props.product.rom}</p>
           </Typography>
-          <Typography variant="body3" color="textSecondary" component="span">
-            CPU:{props.product.cpu}
-          </Typography>
-          <Typography variant="body4" color="textSecondary" component="span">
-            RAM:{props.product.ram}
-          </Typography>
-          <Typography variant="body5" color="textSecondary" component="span">
-            ROM:{props.product.rom}
-          </Typography>
-        
+
         </CardContent>
       </Collapse>
     </Card>

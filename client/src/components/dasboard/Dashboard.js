@@ -28,7 +28,7 @@ import { useHistory } from 'react-router'
 import Admin from './Admin'
 import AddItem from './AddItem'
 import Manage from './Manage'
-
+import Home from '../home/Home'
 
 const drawerWidth = 240;
 
@@ -135,7 +135,6 @@ const Dashboard = () => {
 
   //history
 
-
   const logOut = () => {
     history.push("/login")
     localStorage.setItem("accessToken", false);
@@ -202,12 +201,13 @@ const Dashboard = () => {
                   <ListItemText primary="Manage" />
                 </ListItem>
               </Link>
-              <ListItem button>
-                <ListItemIcon>
-                  <PeopleIcon />
-                </ListItemIcon>
-                <ListItemText primary="classify" />
-              </ListItem>
+                <ListItem>
+                  <ListItemIcon>
+                    <ShoppingCartIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Home" />
+                </ListItem>
+              
 
             </div>
 

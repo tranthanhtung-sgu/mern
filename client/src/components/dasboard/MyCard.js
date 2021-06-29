@@ -5,6 +5,8 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Paper from '@material-ui/core/Paper';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
@@ -56,8 +58,8 @@ export default function MyCard(props) {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {props.name}
+          <Typography  gutterBottom variant="h5" component="h2">
+            {props.name}<Paper style={{paddingLeft:"50px"}}  elevation={3}><h4 >{props.quantity} items</h4></Paper>
           </Typography>
           <Typography variant="body2" color="textSecondary" component="span">
             <p>{props.screen}</p>

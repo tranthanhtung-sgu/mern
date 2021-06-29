@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CenteredGrid(props) {
     const classes = useStyles();
-    console.log(props)
     //GET PRODUCT
 
 

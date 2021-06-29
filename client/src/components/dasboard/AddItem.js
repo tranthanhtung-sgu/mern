@@ -57,6 +57,7 @@ export default function SignOut(props) {
     const [ROM, setROM] = useState('')
     const [Image, setImage] = useState('')
     const [brand, setBrand] = useState('')
+    const [quantity, setQuantity] = useState('')
 
     //history
     let history = useHistory()
@@ -70,7 +71,8 @@ export default function SignOut(props) {
                 ram: RAM,
                 rom: ROM,
                 img: Image,
-                brand:brands.find(item=>item.description===brand)._id
+                brand:brands.find(item=>item.description===brand)._id,
+                quantity
             }).then(res => console.log(res, "success")
             );
         localStorage.setItem("updateProducts", localStorage.getItem("updateProducts") + 1)
@@ -119,7 +121,10 @@ export default function SignOut(props) {
         setBrand(event.target.value)
         console.log(brand);
     }
-
+    const handleChangeQuantity = (event) => {
+        setQuantity(event.target.value)
+        console.log(brand);
+    }
 
 
 
@@ -137,7 +142,7 @@ export default function SignOut(props) {
                     <UpdateIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Update Product
+                    Add Product
                 </Typography>
                 <form onSubmit={handleSubmit} className={classes.form} Validate>
                     {/* BUTTON BACK */}
@@ -233,6 +238,17 @@ export default function SignOut(props) {
                         id="Image"
                         value={Image}
                         onChange={handleChangeImage}
+                    />
+                     <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="quantity"
+                        label="Quantity"
+                        id="Quantity"
+                        value={quantity}
+                        onChange={handleChangeQuantity}
                     />
 
 
