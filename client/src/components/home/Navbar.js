@@ -13,8 +13,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import {useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -87,8 +87,10 @@ export default function PrimarySearchAppBar() {
   const [countCart, setCountCart] = React.useState(0);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const quantity = useSelector(state => state.quantity.count);
 useEffect(()=>{
-  setCountCart((sessionStorage.getItem("cart")?sessionStorage.getItem("cart").split(","):[]).length)
+  // setCountCart((sessionStorage.getItem("cart")?sessionStorage.getItem("cart").split(","):[]).length)
+  console.log(quantity,"so lung")
 }
 )
   const handleProfileMenuOpen = (event) => {
@@ -130,9 +132,11 @@ useEffect(()=>{
           >
             <MenuIcon />
           </IconButton>
+          <Link to='/home' style={{textDecoration:"none",color:"white"}}>
           <Typography className={classes.title} variant="h6" noWrap>
-           Tran Van Son
+           TVSMobile
           </Typography>
+          </Link>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -153,10 +157,10 @@ useEffect(()=>{
                 <MailIcon />
               </Badge>
             </IconButton>
-            <Link to="/home/cart">
-            <IconButton aria-label="Cart" color="inherit">
-              <Badge badgeContent={countCart} color="secondary">
-                <ShoppingCartIcon />
+            <Link to="/home/cart" >
+            <IconButton aria-label="Cart" >
+              <Badge badgeContent={quantity} color="secondary">
+                <ShoppingCartIcon style={{fill:'white'}}/>
               </Badge>
             </IconButton>
             </Link>
@@ -168,7 +172,7 @@ useEffect(()=>{
               onClick={handleProfileMenuOpen}
               color="white"
             >
-              <AccountCircle />
+              <AccountCircle style={{fill:'white'}}/>
             </IconButton>
           </div>
          

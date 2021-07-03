@@ -58,6 +58,7 @@ export default function SignOut(props) {
     const [Image, setImage] = useState('')
     const [brand, setBrand] = useState('')
     const [quantity, setQuantity] = useState('')
+    const [Price, setPrice] = useState('')
 
     //history
     let history = useHistory()
@@ -72,7 +73,8 @@ export default function SignOut(props) {
                 rom: ROM,
                 img: Image,
                 brand:brands.find(item=>item.description===brand)._id,
-                quantity
+                quantity,
+                price:Price
             }).then(res => console.log(res, "success")
             );
         localStorage.setItem("updateProducts", localStorage.getItem("updateProducts") + 1)
@@ -125,7 +127,9 @@ export default function SignOut(props) {
         setQuantity(event.target.value)
         console.log(brand);
     }
-
+    const handleChangePrice = (event) => {
+        setPrice(event.target.value)
+    }
 
 
     const backAdmin = () => {
@@ -239,6 +243,19 @@ export default function SignOut(props) {
                         value={Image}
                         onChange={handleChangeImage}
                     />
+                     <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="Price"
+                        label="Price"
+                        id="Price"
+                        value={Price}
+                        onChange={handleChangePrice}
+                    />
+
+
                      <TextField
                         variant="outlined"
                         margin="normal"

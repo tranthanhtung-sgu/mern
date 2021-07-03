@@ -58,7 +58,7 @@ export default function SignOut(props) {
     const [ROM, setROM] = useState('')
     const [Image, setImage] = useState('')
     const [Quantity, setQuantity] = useState('')
-
+    const [Price, setPrice] = useState('')
     const [product, setProduct] = useState({})
     //history
     let history = useHistory()
@@ -72,7 +72,8 @@ export default function SignOut(props) {
                 ram: RAM,
                 rom: ROM,
                 img: Image,
-                quantity: Quantity
+                quantity: Quantity,
+                price:Price
             }).then(res => console.log(res, "success")
             );
         localStorage.setItem("updateProducts", localStorage.getItem("updateProducts") + 1)
@@ -116,16 +117,20 @@ export default function SignOut(props) {
     const handleChangeQuantity = (event) => {
         setQuantity(event.target.value)
     }
+    const handleChangePrice = (event) => {
+        setPrice(event.target.value)
+    }
 
     const click = () => {
-        const { _id, name, screen, cpu, ram, rom, img,quantity } = product;
+        const { _id, name, screen, cpu, ram, rom, img, quantity ,price } = product;
         setName(name)
         setScreen(screen)
-        setCPU(cpu) 
+        setCPU(cpu)
         setRAM(ram)
         setROM(rom)
         setImage(img)
         setQuantity(quantity)
+        setPrice(price)
     }
     const backAdmin = () => {
         history.push("/admin")
@@ -242,7 +247,17 @@ export default function SignOut(props) {
                         value={Quantity}
                         onChange={handleChangeQuantity}
                     />
-
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="price"
+                        label="Price"
+                        id="price"
+                        value={Price}
+                        onChange={handleChangePrice}
+                    />
 
                     <Button
                         type="submit"

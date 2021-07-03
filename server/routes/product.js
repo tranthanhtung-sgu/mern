@@ -3,11 +3,11 @@ const router =express.Router();
 const Product= require('../models/Product');
 //POST
 router.post('/',async (req,res)=>{
-    const {name,screen,cpu,ram,rom,img,quantity,brand}=req.body
+    const {name,screen,cpu,ram,rom,img,quantity,price,brand}=req.body
     console.log(req.body,"req")
     try{
         const newProduct=new Product({
-            name,screen,cpu,ram,rom,img,quantity,brand
+            name,screen,cpu,ram,rom,img,quantity,price,brand
         }
         );
         console.log(newProduct.quantity,"heeh");
@@ -31,10 +31,10 @@ module.exports= router;
 
 //PUT
 router.put('/:id',async (req,res)=>{
-    const {name,screen,cpu,ram,rom,img,quantity}=req.body;
+    const {name,screen,cpu,ram,rom,img,price,quantity}=req.body;
     try{
-        const newProduct={name,screen,cpu,ram,rom,img,quantity};
-        await Product.findOneAndUpdate({_id:req.params.id},{name,screen,cpu,ram,rom,img,quantity});
+        const newProduct={name,screen,cpu,ram,rom,img,price,quantity};
+        await Product.findOneAndUpdate({_id:req.params.id},{name,screen,cpu,ram,rom,img,price,quantity});
         res.json({success:true,message:"update thanh cong",newProduct})
     }catch(error){
         console.log(error.message,"loi update");

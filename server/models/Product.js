@@ -30,6 +30,10 @@ const productSchema=new Schema({
         type:Number,
         require:true
     },
+    price:{
+        type:Number,
+        require:true    
+    },
     brand:{
         type:mongoose.Types.ObjectId,
         ref:"brands"

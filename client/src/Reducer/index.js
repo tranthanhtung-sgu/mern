@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux'
 import userReducer from './userReducer'
-import hobbyReducer from './hobbyReducer'
+import quantityReducer from './quantityReducer'
 const rootReducer=combineReducers({
-    hobby:hobbyReducer,
+    quantity:quantityReducer,
     user:userReducer,
 })
 export default rootReducer;

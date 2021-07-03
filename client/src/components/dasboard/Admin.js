@@ -207,11 +207,11 @@ export default function Admin(props) {
             </Button>
             <Grid container spacing={3}>
                 {products.map((product) => {
-                    const { _id, name, screen, cpu, ram, rom, img,quantity } = product;
+                    const { _id, name, screen, cpu, ram, rom, img,quantity,price } = product;
                     return (
                         <Grid item xs={3} key={product._id}>
                             <Paper className={classes.paper} >
-                                <MyCard updateProduct={updateProduct} id={_id} name={name} screen={screen} cpu={cpu} ram={ram} rom={rom} img={img} quantity={quantity}></MyCard>
+                                <MyCard updateProduct={updateProduct} id={_id} name={name} screen={screen} cpu={cpu} ram={ram} rom={rom} img={img} price={price} quantity={quantity}></MyCard>
                             </Paper>
                         </Grid>
                     )
