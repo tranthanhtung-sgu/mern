@@ -1,6 +1,7 @@
 const  express =require('express')
 const router =express.Router();
 const Product= require('../models/Product');
+const verifyToken =require('../middleware/auth')
 //POST
 router.post('/',async (req,res)=>{
     const {name,screen,cpu,ram,rom,img,quantity,price,brand}=req.body

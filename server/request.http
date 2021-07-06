@@ -21,7 +21,7 @@ Content-Type: application/json
 ###
 POST http://localhost:5000/api/posts/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGNlY2M3YmE1ZjYyYTJkYmU1MjhmMzIiLCJpYXQiOjE2MjQxNjU2OTl9.HrOdQ7ZzKUpC93YouNxweJc_YVTJlYSProsh7D-I1_Y
+Authorization: Bearer fds.eyJ1c2VySWQiOiI2MGNlY2M3YmE1ZjYyYTJkYmU1MjhmMzIiLCJpYXQiOjE2MjQxNjU2OTl9.HrOdQ7ZzKUpC93YouNxweJc_YVTJlYSProsh7D-I1_Y
 
 {
     "title":"Second asdad",
@@ -107,4 +107,45 @@ GET http://localhost:5000/api/brands/
 Content-Type: application/json
 ###
 DELETE http://localhost:5000/api/brands/60d52857f36c77052ef4f91f
+Content-Type: application/json
+
+###
+POST http://localhost:5000/api/customers/register
+Content-Type: application/json
+
+{
+    "username":"vanson",
+    "name":"Van Son",
+    "password":"vanson",
+    "phone":"0523391051",
+    "address":"4 Nguyen Tat Thanh Quan 4 Tp HCM",
+    "email":"son@gmail.com"
+}
+###
+GET http://localhost:5000/api/customers/
+Content-Type: application/json
+###
+
+PUT http://localhost:5000/api/customers/60e2dfddf2b5d613da53fb50
+Content-Type: application/json
+
+{
+    "username":"vanson1",
+    "name":"Van Son",
+    "password":"vanson",
+    "phone":"0523391051",
+    "address":"4 Nguyen Tat Thanh Quan 4 Tp HCM",
+    "email":"son@gmail.com"
+}
+###
+POST http://localhost:5000/api/customers/login
+Content-Type: application/json
+
+{
+    "username":"vanson",
+    "password":"vanson"
+}
+
+###
+DELETE http://localhost:5000/api/customers/60e2e12b85dabf14d5b932ae
 Content-Type: application/json

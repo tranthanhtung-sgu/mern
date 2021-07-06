@@ -90,7 +90,6 @@ export default function PrimarySearchAppBar() {
   const quantity = useSelector(state => state.quantity.count);
 useEffect(()=>{
   // setCountCart((sessionStorage.getItem("cart")?sessionStorage.getItem("cart").split(","):[]).length)
-  console.log(quantity,"so lung")
 }
 )
   const handleProfileMenuOpen = (event) => {

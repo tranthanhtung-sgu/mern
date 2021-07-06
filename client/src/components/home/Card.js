@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -16,13 +17,14 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useDispatch } from 'react-redux'
 import CardActionArea from '@material-ui/core/CardActionArea';
-
+import { useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
   },
   media: {
-    height: "160px",
+    minHeight: "300px",
     paddingTop: '56.25%', // 16:9
   },
   expand: {
@@ -40,9 +42,13 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     height: "500px"
+  },
+  text: {
+    fontSize: 20,
+    color:'red',
   }
 }));
-
+const CurrencyFormat= require('react-currency-format');
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -52,7 +58,7 @@ export default function RecipeReviewCard(props) {
     setExpanded(!expanded);
   };
 
-
+  const history = useHistory()
   const addItemCart = (product) => {
     //if don't have item in cart
     if (!sessionStorage.getItem("cart")) {
@@ -80,11 +86,6 @@ export default function RecipeReviewCard(props) {
       })
       console.log([new Set(sessionStorage.getItem("cart").split(','))])
     }
-
-
-
-
-
   }
   return (
     <Card className={classes.root}>
@@ -98,17 +99,36 @@ export default function RecipeReviewCard(props) {
           title={props.product.name}
           subheader={props.product.brand.name}
         />
-        <CardMedia
-          className={classes.media}
-          image={props.product.img}
-          title="Paella dish"
-        />
+        <Paper elevation={3}
+          className={classes.text}
+        ><CurrencyFormat value={props.product.price} displayType={'text'} thousandSeparator={true} prefix={'VND'} />
+        </Paper>
+        <Link to={{
+          pathname: `/home/detail-product`,
+          state: {
+            product: props.product
+          }
+
+
+        }}
+
+        >
+          <CardMedia
+
+            className={classes.media}
+            image={props.product.img}
+            title="Paella dish"
+          />
+        </Link>
+
         <CardActions onClick={() => addItemCart(props.product)} disableSpacing>
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />Add
           </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon /> Buy
+          <IconButton
+            aria-label="share">
+            <ShareIcon />
+            Buy
           </IconButton>
           <IconButton
             className={clsx(classes.expand, {
@@ -121,13 +141,14 @@ export default function RecipeReviewCard(props) {
             <ExpandMoreIcon />
           </IconButton>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        \        <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="span">
               <p>Screen:{props.product.screen}</p>
               <p>CPU:{props.product.cpu}</p>
               <p>RAM:{props.product.ram}</p>
               <p>ROM:{props.product.rom}</p>
+
             </Typography>
 
           </CardContent>

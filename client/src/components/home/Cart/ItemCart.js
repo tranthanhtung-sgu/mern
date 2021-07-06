@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import { getProduct, getProducts } from '../api/product'
+import { getProduct, getProducts } from '../../api/product'
 import { useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ComplexGrid(props) {
     //Sum Quantity
-    const [sumQuantity, setSumQuantity] = useState(sessionStorage.getItem("cart").split(',').length)
     const [quantity, setQuantity] = useState(sessionStorage.getItem(props.id))
+    console.log(quantity);
     const dispatch = useDispatch()
     const [product, setProduct] = useState([])
     const [products, setProducts] = useState([])
@@ -49,21 +49,21 @@ export default function ComplexGrid(props) {
             .catch(err => console.log(err.message))
 
         return () => {
-            console.log("trong return")
+
         }
     }, [])
 
 
     const removeItem = (id) => {
-        sessionStorage.setItem(id,0)
-        let arr = sessionStorage.getItem("cart").split(',');
+        sessionStorage.setItem(id, 0)// Asign id in session = 0
+        let arr = sessionStorage.getItem("cart").split(',');//Get Array Cart in Session
         let newArr = arr.filter(item =>
-            item !== id
-        )
+            item !== id)
+     
 
         sessionStorage.setItem("cart", newArr)
-        props.updateCartByDelete(sessionStorage.getItem("cart"))
-        if (newArr.length === 0) {
+        props.updateCartByDelete(sessionStorage.getItem("cart"))// re-render itemCart in Cart
+        if (newArr.length === 0) {//Redux update quantity in icon Cart
             dispatch({
                 type: "hi",
                 payload: 0
@@ -74,20 +74,19 @@ export default function ComplexGrid(props) {
                 type: "hi",
                 payload: sessionStorage.getItem("cart").split(',').length
             })
-        console.log(sessionStorage.getItem("cart").split(',').length);
-        // sessionStorage.setItem("cart",arr)
     }
 
     const increaseQuanity = (id) => {
-        sessionStorage.setItem(id,
-            Number(sessionStorage.getItem(id)) + 1)
+        //Update Session Quantity for every id
+        sessionStorage.setItem(id, Number(sessionStorage.getItem(id)) + 1)
+        //Set Quantity in Button increase / decrease
         setQuantity(sessionStorage.getItem(id))
-
-
+        //Create new array includes old item and one new item
         let arr = sessionStorage.getItem("cart").split(',')
         arr.splice(0, 0, id)
+        //Asign new array into session Cart
         sessionStorage.setItem("cart", arr)
-        setSumQuantity(arr.length)
+
         dispatch({
             type: "hi",
             payload: sessionStorage.getItem("cart").split(',').length
@@ -96,29 +95,28 @@ export default function ComplexGrid(props) {
     }
 
     const decreaseQuanity = (id) => {
-        //Giam QuantityID sessionStorage
-        sessionStorage.setItem(id, Number(sessionStorage.getItem(id)) - 1)
-        setQuantity(sessionStorage.getItem(id))
-        if (sessionStorage.getItem(id) === '0') {
-            removeItem(id);
-            console.log("hiohi");
+        //Update Session Quantity for every id
+        if (sessionStorage.getItem(id) === '1') {
+            alert("Don't set quanity <1");
         }
-        //Find index of product will be delete
-        let index = sessionStorage.getItem("cart").split(',').findIndex(item => item == id);
-        let arr = sessionStorage.getItem("cart").split(',');
-        arr.splice(index, 1);
+        else {
+            sessionStorage.setItem(id, Number(sessionStorage.getItem(id)) - 1)
+            //Set Quantity in Button increase / decrease
+            setQuantity(sessionStorage.getItem(id))
+            console.log(quantity, 'qtt');
+            console.log(sessionStorage.getItem(id), 'sstr');
+            //Create new array includes old item and one new item
+            let arr = sessionStorage.getItem("cart").split(',');//Get Array Cart in Session
+            arr.splice(arr.find(item => item === id), 1);
+            //Asign new array into session Cart
+            sessionStorage.setItem("cart", arr)
+            dispatch({
+                type: "hi",
+                payload: sessionStorage.getItem("cart").split(',').length
+            })
+        }
 
-        sessionStorage.setItem('cart', arr);
-        setSumQuantity(arr.length)
 
-        // let hihi=sessionStorage.getItem("cart").split(',').map((item)=>{
-        //     return products.find(itemP=>itemP._id===item).quantity
-        // })
-
-        dispatch({
-            type: "hi",
-            payload: sessionStorage.getItem("cart").split(',').length
-        })
     }
 
     const CurrencyFormat = require('react-currency-format');

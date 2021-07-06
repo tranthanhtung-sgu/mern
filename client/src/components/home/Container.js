@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Card from './Card';
+import {Link} from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -21,6 +22,7 @@ export default function CenteredGrid(props) {
 
     return (
         <div className={classes.root}>
+            
             <Grid container spacing={3}>
                
                     {props.products.map((product) => {

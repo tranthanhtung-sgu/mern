@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Item from './ItemCart'
-import Statictical from './Statictical'
-import { getProducts } from '../api/product'
+import Statictical from '../Statictical'
+import { getProducts } from '../../api/product'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -37,7 +37,7 @@ export default function CenteredGrid() {
  
     return (
         <div className={classes.root}>
-            <Statictical></Statictical>
+            {/* <Statictical></Statictical> */}
             <Grid container spacing={3}>
                 {[...new Set(itemsCart)].map(item => {
                     return (

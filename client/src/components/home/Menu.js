@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Container from './Container'
 import { getProducts } from '../api/product'
+
+
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -74,8 +76,10 @@ export default function FullWidthTabs() {
         }
     })
 
-    return (
+    return (  
+      
         <div className={classes.root}>
+            
             <AppBar position="static" color="default">
                 <Tabs
                     value={value}
@@ -111,5 +115,6 @@ export default function FullWidthTabs() {
                 </TabPanel>
             </SwipeableViews>
         </div>
+        
     );
 }

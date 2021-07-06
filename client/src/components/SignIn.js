@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useHistory} from 'react-router-dom'
-import {postUser} from "./api/user"
+import { useHistory } from 'react-router-dom'
+import { postCustomer } from "./api/user"
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -49,45 +49,44 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn(props) {
   const classes = useStyles();
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    //history
-    let history=useHistory()
-    //Submit
-    const handleSubmit=(event)=>{
-         event.preventDefault();
-         
-       postUser({username,password})
-        .then(function (res) {
-          // handle success
-          console.log(res);
-          if(res.data.success===true)
-          {
-              alert("login success");
-              localStorage.setItem("accessToken",true);
-              history.push("./admin")
-          }
-          
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-          alert("login fail")
-        })
-        
-    }
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  //history
+  let history = useHistory()
+  //Submit
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-    const handleChangeUsername=(event)=>{
-        setUsername(event.target.value)
-    }
+    postCustomer({ username, password })
+      .then(function (res) {
+        // handle success
+        console.log(res);
+        if (res.data.success === true) {
+          alert("login success");
+          localStorage.setItem("accessToken", true);
+          history.push("./home")
+        }
 
-    const handleChangePassword=(event)=>{
-        setPassword(event.target.value)
-     
-    }
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+        alert("login fail")
+      })
+
+  }
+
+  const handleChangeUsername = (event) => {
+    setUsername(event.target.value)
+  }
+
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value)
+
+  }
 
 
-//FORM
+  //FORM
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -98,7 +97,7 @@ export default function SignIn(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form  onSubmit={handleSubmit} className={classes.form} Validate>
+        <form onSubmit={handleSubmit} className={classes.form} Validate>
           <TextField
             variant="outlined"
             margin="normal"
