@@ -149,3 +149,23 @@ Content-Type: application/json
 ###
 DELETE http://localhost:5000/api/customers/60e2e12b85dabf14d5b932ae
 Content-Type: application/json
+
+###
+POST http://localhost:5000/api/comments
+Content-Type: application/json
+
+{
+    "customer":"60e31daf75f8a422ea7bd71e",
+    "product":"60d724b2cf54f306327e9c9b",
+    "content":"Huawei kia"
+}
+###
+GET http://localhost:5000/api/customers/
+Content-Type: application/json
+###
+GET  http://localhost:5000/api/products/
+Content-Type: application/json
+###
+
+DELETE   http://localhost:5000/api/comments/60e44f585ee6cf1bba3ba376
+Content-Type: application/json

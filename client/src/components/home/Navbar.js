@@ -15,7 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {useSelector} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link,useHistory} from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -80,7 +80,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(props) {
+  const history = useHistory()
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -101,6 +102,13 @@ useEffect(()=>{
     
   };
 
+  const logOut = () => {
+    setAnchorEl(null);
+    props.history.push('/login');
+    sessionStorage.setItem("idLogin",'');
+    sessionStorage.setItem("accessToken",false)
+  };
+
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -114,7 +122,7 @@ useEffect(()=>{
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={logOut}>Log out</MenuItem>
     </Menu>
   );
 

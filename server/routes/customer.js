@@ -21,17 +21,17 @@ router.post('/login',async (req,res)=>{
     }
     try{
         //check for existing user
-        const user=await Customer.findOne({username});
-        if(!user){
+        const customer=await Customer.findOne({username});
+        if(!customer){
             return res.status(400).json({success:false,message:"Incorrect username or password"})
         }
-        const passwordValid=await argon2.verify(user.password,password);
+        const passwordValid=await argon2.verify(customer.password,password);
         if(!passwordValid){
             return res.status(400).json({success:false,message:"Incorrect username or password"})
         }
         //return token
-        const accessToken=jwt.sign({userId:user._id},process.env.ACCESS_TOKEN_SECRET)
-        res.json({success:true,message:"login success",accessToken})
+        const accessToken=jwt.sign({userId:customer._id},process.env.ACCESS_TOKEN_SECRET)
+        res.json({success:true,message:"login success",customer})
     }catch(error){
         console.log(error,"loi cmnr")
     }

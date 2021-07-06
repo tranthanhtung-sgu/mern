@@ -60,10 +60,10 @@ export default function SignIn(props) {
     postCustomer({ username, password })
       .then(function (res) {
         // handle success
-        console.log(res);
         if (res.data.success === true) {
           alert("login success");
           localStorage.setItem("accessToken", true);
+          localStorage.setItem("idLogin",res.data.customer._id)
           history.push("./home")
         }
 

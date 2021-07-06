@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
   text: {
     fontSize: 20,
     color:'red',
+  },
+  img:{
+    maxWidth:300
   }
 }));
 const CurrencyFormat= require('react-currency-format');
@@ -113,12 +116,8 @@ export default function RecipeReviewCard(props) {
         }}
 
         >
-          <CardMedia
-
-            className={classes.media}
-            image={props.product.img}
-            title="Paella dish"
-          />
+          
+          <img className={classes.img} src={props.product.img}></img>
         </Link>
 
         <CardActions onClick={() => addItemCart(props.product)} disableSpacing>

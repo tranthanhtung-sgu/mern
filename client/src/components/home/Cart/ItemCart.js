@@ -17,14 +17,14 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 500,
     },
     image: {
-        width: 128,
-        height: 128,
+        width: 100,
+        height: 100,
     },
     img: {
         margin: 'auto',
         display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
+        maxWidth: '100px',
+        maxHeight: '100px',
     },
 }));
 

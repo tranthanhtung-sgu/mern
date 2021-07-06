@@ -82,7 +82,7 @@ export default function SignOut(props) {
               alert("login success");
               history.push("/home")
               localStorage.setItem("accessToken", true);
-              
+              localStorage.setItem("idLogin", res.data.customer._id);
             }
 
           })

@@ -4,13 +4,14 @@ import DetailProduct from './DetailProduct'
 import Menu from './Menu'
 import Cart from './Cart/Cart'
 import Banner from '../Banner/Banner'
-
+import {useHistory} from 'react-router-dom'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 const Home = () => {
+    const history = useHistory()
     return (
         <div>
             <Router>
-                <Navbar></Navbar>
+                <Navbar history={history}></Navbar>
 
                 <Switch>
                     <Route path="/home/cart"><Cart /></Route>

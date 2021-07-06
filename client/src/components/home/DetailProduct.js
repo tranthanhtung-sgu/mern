@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import SendIcon from '@material-ui/icons/Send';
 import IconButton from '@material-ui/core/IconButton';
 import Commnent from './Comment'
+import axios from 'axios'
 const useStyles = makeStyles((theme) => ({
     word: {
         fontSize: 30,
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'underline overline #FF3028'
     },
     margin: {
-        marginTop:'100px',
+        marginTop: '100px',
         marginLeft: '100px',
 
     },
@@ -29,11 +30,31 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 const DetailProduct = (props) => {
+    useEffect(() => {
+        axios.get(`http://localhost:5000/api/comments/${product._id}`)
+            .then(res => {
+                setComments(res.data.comments)
+                console.log('====================================');
+                console.log(res.data.comments);
+                console.log('====================================');
+            })
+            .catch(err => console.log(err))
+    })
+
     const localtion = useLocation()
     const classes = useStyles();
+    const [content, setContent] = useState('')
+    const [comments, setComments] = useState([])
     const product = localtion.state.product
-
-
+    const commentContent = () => {
+        axios.post('http://localhost:5000/api/comments', { content, customer: localStorage.getItem('idLogin'), product: product._id })
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+        setContent('')
+    }
+    const handleContentChange = (e) => {
+        setContent(e.target.value)
+    }
     return (
         <div>
             <Grid container spacing={3} className={classes.word}>
@@ -57,9 +78,10 @@ const DetailProduct = (props) => {
                         <p>{product.rom}</p>
                     </Grid>
                 </Grid>
-                <Grid xs={12}>
-                    <Commnent></Commnent>
-                </Grid>
+                {comments.map(item => {
+                    return <Commnent info={item}></Commnent>
+                })}
+
                 <Grid item xs={12}>
                     <div className={classes.margin}>
                         <Grid container spacing={1} alignItems="flex-end">
@@ -67,15 +89,20 @@ const DetailProduct = (props) => {
                                 <AccountCircle />
                             </Grid>
                             <Grid item>
-                                <TextField className={classes.textfield} id="input-with-icon-grid" label="Commnent" />
-                                <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                                <TextField
+                                    onChange={handleContentChange}
+                                    value={content}
+                                    className={classes.textfield} id="input-with-icon-grid" label="Commnent" />
+                                <IconButton
+                                    onClick={commentContent}
+                                    type="submit" className={classes.iconButton} aria-label="search">
                                     <SendIcon />
                                 </IconButton>
                             </Grid>
                         </Grid>
                     </div>
                 </Grid>
-                
+
             </Grid>
         </div>
     )
