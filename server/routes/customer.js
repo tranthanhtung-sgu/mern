@@ -14,6 +14,15 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+        const customer = await Customer.find({_id:req.params.id});
+        res.json({ success: true, message: "Get one Customer succeessss", customer })
+    } catch (err) {
+        console.log(err.message);
+    }
+})
+
 router.post('/login',async (req,res)=>{
     const {username,password}=req.body;
     if(!username||!password){

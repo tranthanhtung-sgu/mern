@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     textfield: {
-        width: '500px'
+        width: '100%'
     }
 }))
 const DetailProduct = (props) => {
@@ -34,9 +34,6 @@ const DetailProduct = (props) => {
         axios.get(`http://localhost:5000/api/comments/${product._id}`)
             .then(res => {
                 setComments(res.data.comments)
-                console.log('====================================');
-                console.log(res.data.comments);
-                console.log('====================================');
             })
             .catch(err => console.log(err))
     })
@@ -78,10 +75,11 @@ const DetailProduct = (props) => {
                         <p>{product.rom}</p>
                     </Grid>
                 </Grid>
-                {comments.map(item => {
-                    return <Commnent info={item}></Commnent>
-                })}
-
+                <Grid container item xs={6}>
+                    {comments.map(item => {
+                        return <Commnent info={item}></Commnent>
+                    })}
+                </Grid>
                 <Grid item xs={12}>
                     <div className={classes.margin}>
                         <Grid container spacing={1} alignItems="flex-end">
@@ -102,8 +100,8 @@ const DetailProduct = (props) => {
                         </Grid>
                     </div>
                 </Grid>
-
             </Grid>
+
         </div>
     )
 }

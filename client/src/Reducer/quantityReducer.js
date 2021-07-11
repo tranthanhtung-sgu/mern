@@ -4,7 +4,7 @@ const initialState={
 
 const quantityReducer=(state=initialState,action)=>{
     switch(action.type){
-        case "UPDATE":
+        case "ONE":
         
         case "SWIMMING":
           

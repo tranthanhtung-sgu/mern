@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Item from './ItemCart'
-import Statictical from '../Statictical'
+import InputPrice from './InputPrice'
 import { getProducts } from '../../api/product'
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,34 +17,46 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CenteredGrid() {
+    const [quantity, setQuantity] = useState(0)
+    const [quantityUpdate, setQuantityUpdate] = useState(0)
+    const [idUpdate, setIdUpdate] = useState('')
     const [itemsCart, setItemsCart] = useState([])
     const [products, setProducts] = useState([])
     useEffect(() => {
-        setItemsCart(sessionStorage.getItem("cart") ? sessionStorage.getItem("cart").split(',') : []);
+        setItemsCart(sessionStorage.getItem("cart") ? sessionStorage.getItem("cart").split(',').filter((item, index) => {
+            return sessionStorage.getItem("cart").split(',').indexOf(item) === index
+        }) : []);
         getProducts().then(res => setProducts(res.data.products)).catch(err => console.log(err.message))
         return () => {
 
         }
-    }, [sessionStorage.getItem("cart")])
-
+    },[])
     const classes = useStyles();
     const updateCartByDelete = (items) => {
-        setItemsCart(items.split(','))
-
+        console.log('====================================');
+        console.log(items,"child to pareent");
+        console.log('====================================');
+        setItemsCart(items)
+        console.log(itemsCart,"sau setstate")
     }
-  const hihihi=sessionStorage.getItem("cart").split(',').map(item=>products.find(itemP=>itemP._id===item))
-    console.log(hihihi);
- 
+    const updateIncreaseDecrease=(id,quantity)=>{
+        setIdUpdate(id)
+        setQuantityUpdate(quantity)
+    }
+
     return (
-        <div className={classes.root}>
-            {/* <Statictical></Statictical> */}
+
+        <div  className={classes.root}>
+            {console.log(itemsCart)}
+             <InputPrice idUpdate={idUpdate} quantityUpdate={quantity} idProducts={itemsCart}></InputPrice>
             <Grid container spacing={3}>
-                {[...new Set(itemsCart)].map(item => {
-                    return (
-                        <Grid item xs={6}>
-                            <Item updateCartByDelete={updateCartByDelete} id={item}></Item>
+                { itemsCart.map(id => 
+                        (<Grid item xs={6}>
+                            <Item 
+                            updateIncreaseDecrease ={updateIncreaseDecrease}
+                            updateCartByDelete={updateCartByDelete} id={id}></Item>
                         </Grid>)
-                })}
+                )}
 
             </Grid>
         </div>

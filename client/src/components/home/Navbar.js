@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,13 +10,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import {useSelector} from 'react-redux'
-import {Link,useHistory} from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { Link, useHistory } from 'react-router-dom'
+import Avatar from './Avatar'
+import Search from './Search'
 const useStyles = makeStyles((theme) => ({
+  textName: {
+    color: "white",
+    fontWeight: "bold"
+  },
   grow: {
     flexGrow: 1,
   },
@@ -32,9 +37,9 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade(theme.palette.common.white, 0.75),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.common.white, 0.75),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
@@ -83,31 +88,41 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar(props) {
   const history = useHistory()
   const classes = useStyles();
+  const [customer, setCustomer] = useState({})
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [countCart, setCountCart] = React.useState(0);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const quantity = useSelector(state => state.quantity.count);
-useEffect(()=>{
-  // setCountCart((sessionStorage.getItem("cart")?sessionStorage.getItem("cart").split(","):[]).length)
-}
-)
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/customers/${localStorage.getItem('idLogin')}`)
+      .then(res => {
+        setCustomer(res.data.customer[0])
+      })
+      .catch(err => console.log(err))
+  }
+    , [])
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    
   };
 
   const logOut = () => {
     setAnchorEl(null);
     props.history.push('/login');
-    sessionStorage.setItem("idLogin",'');
-    sessionStorage.setItem("accessToken",false)
+    sessionStorage.setItem("idLogin", '');
+    sessionStorage.setItem("accessToken", false)
   };
+  const valueFindChange=(e)=>{
+    console.log(e.target.value);
+  }
+  const Find=()=>{
+    console.log("hiasfhasifhaodhf");
+  }
 
 
   const menuId = 'primary-search-account-menu';
@@ -121,12 +136,15 @@ useEffect(()=>{
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+         <Link to="/home/info" >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      </Link>
       <MenuItem onClick={logOut}>Log out</MenuItem>
+      
     </Menu>
   );
 
-  
+
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -139,38 +157,31 @@ useEffect(()=>{
           >
             <MenuIcon />
           </IconButton>
-          <Link to='/home' style={{textDecoration:"none",color:"white"}}>
-          <Typography className={classes.title} variant="h6" noWrap>
-           TVSMobile
-          </Typography>
+          <Link to='/home' style={{ textDecoration: "none", color: "white" }}>
+            <Typography className={classes.title} variant="h6" noWrap>
+              TVSMobile
+            </Typography>
           </Link>
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
+           <Search/>
           </div>
           <div className={classes.grow} />
+
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
               </Badge>
             </IconButton>
+          
             <Link to="/home/cart" >
-            <IconButton aria-label="Cart" >
-              <Badge badgeContent={quantity} color="secondary">
-                <ShoppingCartIcon style={{fill:'white'}}/>
-              </Badge>
-            </IconButton>
+              <IconButton aria-label="Cart" >
+                <Badge style={{ fill: 'white', marginTop: 16 }}  badgeContent={quantity} color="secondary">
+                  <ShoppingCartIcon size="large" style={{ fill: 'white'}} />
+                </Badge>
+              </IconButton>
             </Link>
+
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -179,13 +190,16 @@ useEffect(()=>{
               onClick={handleProfileMenuOpen}
               color="white"
             >
-              <AccountCircle style={{fill:'white'}}/>
+              <Typography className={classes.textName}>
+                {customer.name}
+              </Typography>
+              <Avatar name={customer.name}></Avatar>
             </IconButton>
           </div>
-         
+
         </Toolbar>
       </AppBar>
-      
+
       {renderMenu}
     </div>
   );

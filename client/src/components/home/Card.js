@@ -45,13 +45,13 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     fontSize: 20,
-    color:'red',
+    color: 'red',
   },
-  img:{
-    maxWidth:300
+  img: {
+    maxWidth: 300
   }
 }));
-const CurrencyFormat= require('react-currency-format');
+const CurrencyFormat = require('react-currency-format');
 export default function RecipeReviewCard(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -111,12 +111,8 @@ export default function RecipeReviewCard(props) {
           state: {
             product: props.product
           }
-
-
         }}
-
         >
-          
           <img className={classes.img} src={props.product.img}></img>
         </Link>
 

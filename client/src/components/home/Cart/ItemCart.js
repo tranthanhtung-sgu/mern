@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ComplexGrid(props) {
     //Sum Quantity
     const [quantity, setQuantity] = useState(sessionStorage.getItem(props.id))
-    console.log(quantity);
     const dispatch = useDispatch()
     const [product, setProduct] = useState([])
     const [products, setProducts] = useState([])
@@ -43,13 +42,8 @@ export default function ComplexGrid(props) {
                 (res.data.product))
             .catch(err => console.log(err.message))
         //Get ALL PRODUCT
-        getProducts()
-            .then(res => setProducts
-                (res.data.products))
-            .catch(err => console.log(err.message))
 
         return () => {
-
         }
     }, [])
 
@@ -59,10 +53,10 @@ export default function ComplexGrid(props) {
         let arr = sessionStorage.getItem("cart").split(',');//Get Array Cart in Session
         let newArr = arr.filter(item =>
             item !== id)
-     
-
         sessionStorage.setItem("cart", newArr)
-        props.updateCartByDelete(sessionStorage.getItem("cart"))// re-render itemCart in Cart
+        props.updateCartByDelete(newArr.filter((item, index) => {
+            return newArr.indexOf(item) === index
+        }))// re-render itemCart in Cart
         if (newArr.length === 0) {//Redux update quantity in icon Cart
             dispatch({
                 type: "hi",
@@ -81,12 +75,13 @@ export default function ComplexGrid(props) {
         sessionStorage.setItem(id, Number(sessionStorage.getItem(id)) + 1)
         //Set Quantity in Button increase / decrease
         setQuantity(sessionStorage.getItem(id))
+        console.log(quantity,"tang")
         //Create new array includes old item and one new item
         let arr = sessionStorage.getItem("cart").split(',')
         arr.splice(0, 0, id)
         //Asign new array into session Cart
         sessionStorage.setItem("cart", arr)
-
+        props.updateIncreaseDecrease(id,sessionStorage.getItem(id))
         dispatch({
             type: "hi",
             payload: sessionStorage.getItem("cart").split(',').length
@@ -103,13 +98,14 @@ export default function ComplexGrid(props) {
             sessionStorage.setItem(id, Number(sessionStorage.getItem(id)) - 1)
             //Set Quantity in Button increase / decrease
             setQuantity(sessionStorage.getItem(id))
-            console.log(quantity, 'qtt');
-            console.log(sessionStorage.getItem(id), 'sstr');
+            console.log(quantity,"giam")
             //Create new array includes old item and one new item
             let arr = sessionStorage.getItem("cart").split(',');//Get Array Cart in Session
             arr.splice(arr.find(item => item === id), 1);
             //Asign new array into session Cart
             sessionStorage.setItem("cart", arr)
+            //update quanity in table detail
+            props.updateIncreaseDecrease(id,sessionStorage.getItem(id))
             dispatch({
                 type: "hi",
                 payload: sessionStorage.getItem("cart").split(',').length
